@@ -1,6 +1,6 @@
 {
   "name": "@dword-design/test",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "main": "index.js",
   "repository": "https://github.com/dword-design/test.git",
   "author": "dword <sebastianlandw@gmail.com>",
