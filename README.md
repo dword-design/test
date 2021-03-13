@@ -1,55 +1,115 @@
 <!-- TITLE/ -->
-# @dword-design/base
+# nuxt-mail
 <!-- /TITLE -->
 
 <!-- BADGES/ -->
-[![npm version](https://img.shields.io/npm/v/@dword-design/base.svg)](https://npmjs.org/package/@dword-design/base)
-![Linux macOS Windows compatible](https://img.shields.io/badge/os-linux%20%7C%C2%A0macos%20%7C%C2%A0windows-blue)
-[![Build status](https://github.com/dword-design/base/workflows/build/badge.svg)](https://github.com/dword-design/base/actions)
-[![Coverage status](https://codecov.io/gh/dword-design/base/branch/master/graph/badge.svg)](https://codecov.io/gh/dword-design/base)
-[![Dependency status](https://img.shields.io/david/dword-design/base)](https://david-dm.org/dword-design/base)
-![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen)
-
 <p>
-  <a href="https://gitpod.io/#https://github.com/dword-design/base">
-    <img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Open in Gitpod">
-  </a><a href="https://www.buymeacoffee.com/dword">
-    <img
-      src="https://www.buymeacoffee.com/assets/img/guidelines/download-assets-sm-2.svg"
-      alt="Buy Me a Coffee"
-      height="32"
-    >
-  </a><a href="https://paypal.me/SebastianLandwehr">
-    <img
-      src="https://dword-design.de/images/paypal.svg"
-      alt="PayPal"
-      height="32"
-    >
-  </a><a href="https://www.patreon.com/dworddesign">
-    <img
-      src="https://dword-design.de/images/patreon.svg"
-      alt="Patreon"
-      height="32"
-    >
-  </a>
+    <a href="https://npmjs.org/package/@dword-design/base">
+      <img
+        src="https://img.shields.io/npm/v/@dword-design/base.svg"
+        alt="npm version"
+      >
+    </a><img src="https://img.shields.io/badge/os-linux%20%7C%C2%A0macos%20%7C%C2%A0windows-blue" alt="Linux macOS Windows compatible"><a href="https://github.com/dword-design/base/actions">
+      <img
+        src="https://github.com/dword-design/base/workflows/build/badge.svg"
+        alt="Build status"
+      >
+    </a><a href="https://codecov.io/gh/dword-design/base">
+      <img
+        src="https://codecov.io/gh/dword-design/base/branch/master/graph/badge.svg"
+        alt="Coverage status"
+      >
+    </a><a href="https://david-dm.org/dword-design/base">
+      <img src="https://img.shields.io/david/dword-design/base" alt="Dependency status">
+    </a><img src="https://img.shields.io/badge/renovate-enabled-brightgreen" alt="Renovate enabled"><br/><a href="https://gitpod.io/#https://github.com/dword-design/base">
+      <img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Open in Gitpod">
+    </a><a href="https://www.buymeacoffee.com/dword">
+      <img
+        src="https://www.buymeacoffee.com/assets/img/guidelines/download-assets-sm-2.svg"
+        alt="Buy Me a Coffee"
+        height="32"
+      >
+    </a><a href="https://paypal.me/SebastianLandwehr">
+      <img
+        src="https://dword-design.de/images/paypal.svg"
+        alt="PayPal"
+        height="32"
+      >
+    </a><a href="https://www.patreon.com/dworddesign">
+      <img
+        src="https://dword-design.de/images/patreon.svg"
+        alt="Patreon"
+        height="32"
+      >
+    </a>
 </p>
 <!-- /BADGES -->
 
 <!-- DESCRIPTION/ -->
-Base package for projects.
+Adds email sending capability to a Nuxt.js app. Adds a server route, an injected variable, and uses nodemailer to send emails. Works for universal mode.
 <!-- /DESCRIPTION -->
 
 <!-- INSTALL/ -->
 ## Install
 
 ```bash
-# npm
-$ npm install @dword-design/base
+# NPM
+$ npm install nuxt-mail
 
 # Yarn
-$ yarn add @dword-design/base
+$ yarn add nuxt-mail
 ```
 <!-- /INSTALL -->
+
+## Usage
+
+Add the module to your `nuxt.config.js`. We also have to install the [@nuxtjs/axios](https://www.npmjs.com/package/@nuxtjs/axios) module because it is used internally to call the server route:
+```js
+export default {
+  modules: [
+    '@nuxtjs/axios',
+    ['nuxt-mail', {
+      smtp: {
+        host: "smtp.example.com",
+        port: 587,
+      },
+    }],
+  ],
+  // or use the top-level option:
+  mail: {
+    smtp: {
+      host: "smtp.example.com",
+      port: 587,
+    },
+  },
+}
+```
+
+The `smtp` options are required and directly passed to [nodemailer](https://nodemailer.com/smtp/). Refer to their documentation for available options. Also note that the module only works for `universal` mode and not for `nuxt generate`, because we need the server route (see the [Nuxt.js documentation](https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-mode) for details about the mode).
+
+The module injects the `$mail` variable, which we now use to send emails:
+```js
+// Inside a component
+this.$mail.send({
+  from: 'John Doe',
+  subject: 'Incredible',
+  text: 'This is an incredible test message',
+  to: 'johndoe@gmail.com',
+})
+```
+
+You can also directly call the generated `/mail/send` post route:
+```js
+// Inside a component
+this.$axios.$post('/mail/send', {
+  from: 'John Doe',
+  subject: 'Incredible',
+  text: 'This is an incredible test message',
+  to: 'johndoe@gmail.com',
+})
+```
+
+Note that the data are passed to [nodemailer](https://nodemailer.com/message/). Refer to the documentation for available config options.
 
 <!-- LICENSE/ -->
 ## Support Me
@@ -63,21 +123,21 @@ Hey, I am Sebastian Landwehr, a freelance web developer, and I love developing w
       alt="Buy Me a Coffee"
       height="32"
     >
-  </a>  &nbsp; If you want to send me a one time donation. The coffee is usually pretty good 😊.<br/>
+  </a>&nbsp;If you want to send me a one time donation. The coffee is pretty good 😊.<br/>
   <a href="https://paypal.me/SebastianLandwehr">
     <img
       src="https://dword-design.de/images/paypal.svg"
       alt="PayPal"
       height="32"
     >
-  </a>  &nbsp; Also for one time donations if you like PayPal.<br/>
+  </a>&nbsp;Also for one time donations if you like PayPal.<br/>
   <a href="https://www.patreon.com/dworddesign">
     <img
       src="https://dword-design.de/images/patreon.svg"
       alt="Patreon"
       height="32"
     >
-  </a>  &nbsp; Here you can support me regularly, which is great so I can steadily work on projects.
+  </a>&nbsp;Here you can support me regularly, which is great so I can steadily work on projects.
 </p>
 
 Thanks a lot for your support! ❤️
@@ -86,4 +146,3 @@ Thanks a lot for your support! ❤️
 
 [MIT License](https://opensource.org/licenses/MIT) © [Sebastian Landwehr](https://dword-design.de)
 <!-- /LICENSE -->
-
