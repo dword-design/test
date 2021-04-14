@@ -1,8 +1,8 @@
 {
   "name": "@dword-design/test",
-  "version": "2.0.4",
+  "version": "2.0.7",
   "main": "index.js",
-  "repository": "https://github.com/dword-design/test.git",
+  "repository": "dword-design/test",
   "author": "dword <sebastianlandw@gmail.com>",
   "license": "MIT",
   "dependencies": {
