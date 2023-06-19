@@ -3,9 +3,9 @@
 
 
 "@dword-design/test2@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@dword-design/test2/-/test2-1.0.0.tgz#502e3917519bfc566f66cd43b4eed2e11a5eebac"
-  integrity sha512-PF/jyiU0wz5vFl6yBy9rIEOBfx7LYo4+aY4xxzaoY0TRhP7rHleQuQ5JNQy5ZOkLWhpOJz0zqJEf2TXQLfyUsg==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@dword-design/test2/-/test2-1.0.3.tgz#cabce5782c25e367c0cbbc7b926e95ebfd4429cc"
+  integrity sha512-eVWVfr8p6xYu7X8sU3nASF+m0DWl/L5rZc/89FJGZfyHKa5W2wJu27vYoHIleRIRGxtO/vqkzQ9ncd5pzhod1w==
 
 axios@^0.21.0:
   version "0.21.0"
