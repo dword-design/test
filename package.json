@@ -7,6 +7,6 @@
   "license": "MIT",
   "dependencies": {
     "@dword-design/test2": "^1.0.0",
-    "axios": "^0.21.0"
+    "axios": "^0.28.0"
   }
 }
